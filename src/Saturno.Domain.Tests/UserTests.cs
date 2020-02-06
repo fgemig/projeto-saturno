@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Saturno.Domain.Commands;
+using Saturno.Domain.Contracts;
 using Saturno.Domain.Entities;
 using Saturno.Domain.Handlers;
 using Saturno.Domain.Repositories;
@@ -36,7 +37,7 @@ namespace Saturno.Domain.Tests
             var users = await _fakeUserRepository.GetAll();
 
             foreach (var user in users)
-                await _fakeUserRepository.Delete(user.Id);
+                await _fakeUserRepository.Remove(user.Id);
         }
 
         [TestInitialize()]

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saturno.Infra", "src\Saturn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saturno.Domain.Tests", "src\Saturno.Domain.Tests\Saturno.Domain.Tests.csproj", "{D0B8E782-5F6C-465D-AE7F-820436DFD21C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Saturno.API", "src\Saturno.API\Saturno.API.csproj", "{A2CE95BC-156D-4C55-8F02-A085BDB7A1F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D0B8E782-5F6C-465D-AE7F-820436DFD21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0B8E782-5F6C-465D-AE7F-820436DFD21C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0B8E782-5F6C-465D-AE7F-820436DFD21C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2CE95BC-156D-4C55-8F02-A085BDB7A1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2CE95BC-156D-4C55-8F02-A085BDB7A1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2CE95BC-156D-4C55-8F02-A085BDB7A1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2CE95BC-156D-4C55-8F02-A085BDB7A1F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

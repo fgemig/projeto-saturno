@@ -11,7 +11,7 @@ namespace Saturno.Domain.Tests.Repositories
     {
         private readonly List<User> users = new List<User>();
 
-        public Task Register(User user)
+        public Task Add(User user)
         {
             return Task.Run(() =>
             {
@@ -32,7 +32,7 @@ namespace Saturno.Domain.Tests.Repositories
             });            
         }
 
-        public Task Delete(Guid id)
+        public Task Remove(Guid id)
         {
             return Task.Run(() =>
             {
@@ -47,7 +47,7 @@ namespace Saturno.Domain.Tests.Repositories
 
         public Task<IReadOnlyCollection<User>> GetAll()
         {
-            IReadOnlyCollection<User> list = users.ToList().AsReadOnly();
+            IReadOnlyCollection<User> list = users.AsReadOnly();
 
             return Task.Run(() =>
             {
@@ -61,6 +61,19 @@ namespace Saturno.Domain.Tests.Repositories
             {
                 return users.FirstOrDefault(c => c.Id == id);
             });
-        }       
+        }
+
+        public Task<User> GetByEmail(string email)
+        {
+            return Task.Run(() =>
+            {
+                return users.FirstOrDefault(c => c.Email == email);
+            });
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

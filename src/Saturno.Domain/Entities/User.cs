@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Saturno.Domain.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace Saturno.Domain.Entities
 {
@@ -20,7 +22,17 @@ namespace Saturno.Domain.Entities
 
         public string Password { get; private set; }
 
+        public IReadOnlyCollection<UserRole> Roles => UserRoles;
+
+        private List<UserRole> UserRoles { get; set; } = new List<UserRole>();
+
         public void UpdateName(string newName)
             => Name = newName;
+
+        public void SetUserRole(UserRole role) 
+            => UserRoles.Add(role);
+
+        public void RemoveUserRole(UserRole role)
+            => UserRoles.Remove(role);
     }
 }
