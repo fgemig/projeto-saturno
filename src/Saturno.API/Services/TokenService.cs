@@ -18,11 +18,9 @@ namespace Saturno.API.Services
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role.ToName())
             };
-
-            foreach (var role in user.Roles)            
-                claims.Add(new Claim(ClaimTypes.Role, role.ToName()));            
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

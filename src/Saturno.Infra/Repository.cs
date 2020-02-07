@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Saturno.Domain.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Saturno.Infra
@@ -38,12 +37,7 @@ namespace Saturno.Infra
         {
             DbSet.Remove(DbSet.Find(id));
             await Db.SaveChangesAsync();
-        }
-
-        public async Task<IReadOnlyCollection<TEntity>> GetAll()
-        {
-            return await DbSet.ToListAsync();
-        }
+        }      
 
         public void Dispose()
         {

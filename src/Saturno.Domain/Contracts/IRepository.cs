@@ -8,7 +8,6 @@ namespace Saturno.Domain.Contracts
     {
         Task Add(TEntity obj);
         Task<TEntity> GetById(Guid id);
-        Task<IReadOnlyCollection<TEntity>> GetAll();
         Task Update(TEntity obj);
         Task Remove(Guid id);
     }

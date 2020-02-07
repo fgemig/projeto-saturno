@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Saturno.Domain.Entities;
 
 namespace Saturno.Infra
 {
@@ -6,5 +7,7 @@ namespace Saturno.Infra
     {
         public SaturnoDataContext(DbContextOptions<SaturnoDataContext> options)
             : base(options) { }
+
+        public DbSet<User> Users { get; set; }
     }
 }

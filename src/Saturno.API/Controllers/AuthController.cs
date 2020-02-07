@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Saturno.API.Security;
 using Saturno.API.Services;
 using Saturno.Domain.Commands;
 using Saturno.Domain.Entities;
@@ -19,8 +18,6 @@ namespace Saturno.API.Controllers
         {
             if (command == null)
                 return BadRequest("Usuário não informado");
-
-            command.Password = EncryptionHelper.PasswordEncrypt(command.Password);
 
             var result = (GenericCommandResult)await handler.Handle(command);
 

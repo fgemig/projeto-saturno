@@ -3,6 +3,7 @@ using Saturno.Domain.Commands.Contracts;
 using Saturno.Domain.Entities;
 using Saturno.Domain.Enums;
 using Saturno.Domain.Handlers.Contracts;
+using Saturno.Domain.Helpers;
 using Saturno.Domain.Repositories;
 using System;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace Saturno.Domain.Handlers
 
             await _userRepository.Add(user);
 
-            return new GenericCommandResult(true, "Usuário salvo com sucesso!", user);
+            return new GenericCommandResult(true, "Usuário salvo com sucesso!", user.Id);
         }
 
         public async Task<ICommandResult> Handle(UpdateUser command)
@@ -47,7 +48,7 @@ namespace Saturno.Domain.Handlers
                 return new GenericCommandResult(false, "Usuário não encontrado");
 
             user.UpdateName(command.Name);
-            
+
             await _userRepository.Update(user);
 
             return new GenericCommandResult(true, "Usuário atualizado com sucesso!", user);
@@ -64,12 +65,12 @@ namespace Saturno.Domain.Handlers
 
             if (user != null)
             {
-                if (user.Email == command.Email && user.Password == command.Password)
+                if (user.Email == command.Email && user.Password == EncryptionHelper.Encrypt(command.Password))
                 {
                     return new GenericCommandResult(true, "Usuário autenticado", user);
                 }
             }
-                
+
             return new GenericCommandResult(false, "Verifique credenciais de acesso");
         }
     }

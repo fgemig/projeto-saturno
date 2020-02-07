@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Saturno.Domain.Handlers;
 using Saturno.Domain.Repositories;
+using Saturno.Infra;
 using Saturno.Infra.Repositories;
 using System.Text;
 
@@ -23,10 +25,15 @@ namespace Saturno.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var key = Encoding.ASCII.GetBytes(Settings.SecretKey);
+            services.AddDbContext<SaturnoDataContext>(options =>
+                options.UseInMemoryDatabase("SaturnoDb"));
+                        
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<SaturnoDataContext>();
 
-            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<UserHandler, UserHandler>();
+
+            var key = Encoding.ASCII.GetBytes(Settings.SecretKey);
 
             services.AddAuthentication(c =>
             {
@@ -53,7 +60,7 @@ namespace Saturno.API
                      policy => policy.RequireRole("Admin"));
 
                 options.AddPolicy("RequireUserRole",
-                     policy => policy.RequireRole("User"));
+                     policy => policy.RequireRole("Admin", "User"));
             });
         }
 
