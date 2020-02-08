@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Saturno.Domain.Contracts;
 using System;
-using System.Threading.Tasks;
 
 namespace Saturno.Infra
 {
@@ -16,27 +15,24 @@ namespace Saturno.Infra
             DbSet = Db.Set<TEntity>();
         }
 
-        public async Task Add(TEntity obj)
+        public void Add(TEntity obj)
         {
             DbSet.Add(obj);
-            await Db.SaveChangesAsync();
         }
 
-        public async Task<TEntity> GetById(Guid id)
+        public TEntity GetById(Guid id)
         {
-            return await DbSet.FindAsync(id);
+            return DbSet.Find(id);
         }
 
-        public async Task Update(TEntity obj)
+        public void Update(TEntity obj)
         {
             DbSet.Update(obj);
-            await Db.SaveChangesAsync();
         }
 
-        public async Task Remove(Guid id)
+        public void Remove(Guid id)
         {
             DbSet.Remove(DbSet.Find(id));
-            await Db.SaveChangesAsync();
         }      
 
         public void Dispose()

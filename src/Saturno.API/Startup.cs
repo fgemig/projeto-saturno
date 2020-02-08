@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,9 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Saturno.Domain.Contracts;
+using Saturno.Domain.EventHandlers;
+using Saturno.Domain.Events;
 using Saturno.Domain.Handlers;
 using Saturno.Domain.Repositories;
 using Saturno.Infra;
+using Saturno.Infra.Bus;
 using Saturno.Infra.Repositories;
 using System.Text;
 
@@ -27,11 +32,19 @@ namespace Saturno.API
         {
             services.AddDbContext<SaturnoDataContext>(options =>
                 options.UseInMemoryDatabase("SaturnoDb"));
-                        
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<SaturnoDataContext>();
 
-            services.AddTransient<UserHandler, UserHandler>();
+            services.AddScoped<IEventBus, EventBus>();            
+
+            // Event Handlers
+            services.AddScoped<INotificationHandler<UserRegisteredEvent>, UserEventHandler>();
+
+            // Domain Handlers
+            services.AddScoped<UserHandler, UserHandler>();
+
+            // Repositories
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<SaturnoDataContext>();
 
             var key = Encoding.ASCII.GetBytes(Settings.SecretKey);
 
@@ -62,6 +75,8 @@ namespace Saturno.API
                 options.AddPolicy("RequireUserRole",
                      policy => policy.RequireRole("Admin", "User"));
             });
+
+            services.AddMediatR(typeof(Startup));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

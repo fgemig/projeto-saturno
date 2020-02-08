@@ -2,7 +2,7 @@
 
 namespace Saturno.Domain.Commands
 {
-    public class GenericCommandResult : ICommandResult
+    public class GenericCommandResult
     {
         public GenericCommandResult() { }
 

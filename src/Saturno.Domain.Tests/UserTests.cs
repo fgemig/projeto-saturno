@@ -1,10 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Saturno.Domain.Commands;
 using Saturno.Domain.Contracts;
-using Saturno.Domain.Entities;
 using Saturno.Domain.Handlers;
 using Saturno.Domain.Repositories;
+using Saturno.Domain.Tests.Bus;
 using Saturno.Domain.Tests.Repositories;
+using Saturno.Domain.Tests.UoW;
 using System;
 using System.Threading.Tasks;
 
@@ -14,7 +15,9 @@ namespace Saturno.Domain.Tests
     public class UserTests
     {
         private static readonly IUserRepository _fakeUserRepository = new FakeUserRepository();
-        private readonly UserHandler _handler = new UserHandler(_fakeUserRepository);
+        private static readonly IEventBus _eventBus = new FakeEventBus();
+        private static readonly IUnitOfWork _fakeUnitOfWork = new FakeUnityOfWork();
+        private readonly UserHandler _handler = new UserHandler(_fakeUserRepository, _eventBus, _fakeUnitOfWork);
 
         private static RegisterUser NewValidUser() => new RegisterUser
         {
@@ -32,12 +35,12 @@ namespace Saturno.Domain.Tests
             return invalidUser;
         }
 
-        private async void ClearRepository()
+        private void ClearRepository()
         {
-            var users = await _fakeUserRepository.GetAll();
+            var users = _fakeUserRepository.GetAll();
 
             foreach (var user in users)
-                await _fakeUserRepository.Remove(user.Id);
+                _fakeUserRepository.Remove(user.Id);
         }
 
         [TestInitialize()]
@@ -53,14 +56,14 @@ namespace Saturno.Domain.Tests
 
             var result = (GenericCommandResult)await _handler.Handle(command);
 
-            var user = (User)result.Data;
+            var userGuid = (Guid)result.Data;
 
-            var userDb = await _fakeUserRepository.GetById(user.Id);
+            var userDb = _fakeUserRepository.GetById(userGuid);
 
             Assert.AreEqual(0, command.ValidationResult.Count);
             Assert.IsTrue(result.Success);
             Assert.IsNotNull(userDb);
-        }        
+        }
 
         [TestMethod]
         public async Task Deve_Retornar_Notificacoes_Quando_Usuario_Invalido()
@@ -111,9 +114,9 @@ namespace Saturno.Domain.Tests
 
             var registerUserCommandResult = (GenericCommandResult)await _handler.Handle(registerUserCommand);
 
-            var userResult = (User)registerUserCommandResult.Data;
+            var userResultGuid = (Guid)registerUserCommandResult.Data;
 
-            var userDb = await _fakeUserRepository.GetById(userResult.Id);
+            var userDb = _fakeUserRepository.GetById(userResultGuid);
 
             Assert.AreEqual(0, registerUserCommand.ValidationResult.Count);
             Assert.IsTrue(registerUserCommandResult.Success);
@@ -128,7 +131,7 @@ namespace Saturno.Domain.Tests
 
             var updateUserCommandResult = (GenericCommandResult)await _handler.Handle(updateUserCommand);
 
-            userDb = await _fakeUserRepository.GetById(userResult.Id);
+            userDb = _fakeUserRepository.GetById(userResultGuid);
 
             Assert.AreEqual(0, updateUserCommand.ValidationResult.Count);
             Assert.IsTrue(updateUserCommandResult.Success);

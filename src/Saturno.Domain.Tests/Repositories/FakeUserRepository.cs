@@ -11,64 +11,44 @@ namespace Saturno.Domain.Tests.Repositories
     {
         private readonly List<User> users = new List<User>();
 
-        public Task Add(User user)
+        public void Add(User user)
         {
-            return Task.Run(() =>
-            {
-                users.Add(user);
-            });
+            users.Add(user);
         }
 
-        public Task Update(User user)
+        public void Update(User user)
         {
-            return Task.Run(() =>
-            {
-                var userDb = GetById(user.Id).Result;
+            var userDb = GetById(user.Id);
 
-                if (userDb != null)
-                {
-                    userDb.UpdateName(user.Name);
-                }
-            });            
+            if (userDb != null)
+            {
+                userDb.UpdateName(user.Name);
+            }
         }
 
-        public Task Remove(Guid id)
+        public void Remove(Guid id)
         {
-            return Task.Run(() =>
-            {
-                var userDb = GetById(id).Result;
+            var userDb = GetById(id);
 
-                if (userDb != null)
-                {
-                    users.Remove(userDb);
-                }
-            });
+            if (userDb != null)
+            {
+                users.Remove(userDb);
+            }
         }
 
-        public Task<IReadOnlyCollection<User>> GetAll()
+        public IReadOnlyCollection<User> GetAll()
         {
-            IReadOnlyCollection<User> list = users.AsReadOnly();
-
-            return Task.Run(() =>
-            {
-                return list;
-            });
+            return  users.AsReadOnly();
         }
 
-        public Task<User> GetById(Guid id)
+        public User GetById(Guid id)
         {
-            return Task.Run(() =>
-            {
-                return users.FirstOrDefault(c => c.Id == id);
-            });
+            return users.FirstOrDefault(c => c.Id == id);
         }
 
-        public Task<User> GetByEmail(string email)
+        public User GetByEmail(string email)
         {
-            return Task.Run(() =>
-            {
-                return users.FirstOrDefault(c => c.Email == email);
-            });
+            return users.FirstOrDefault(c => c.Email == email);
         }
 
         public void Dispose()

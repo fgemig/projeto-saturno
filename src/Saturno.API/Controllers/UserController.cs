@@ -28,9 +28,9 @@ namespace Saturno.API.Controllers
 
         [HttpGet("list")]
         [AllowAnonymous]
-        public async Task<IReadOnlyCollection<User>> List([FromServices]IUserRepository repository)
+        public IReadOnlyCollection<User> List([FromServices]IUserRepository repository)
         {
-            return await repository.GetAll();
+            return repository.GetAll();
         }
     }
 }

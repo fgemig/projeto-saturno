@@ -3,7 +3,6 @@ using Saturno.Domain.Entities;
 using Saturno.Domain.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Saturno.Infra.Repositories
 {
@@ -12,15 +11,15 @@ namespace Saturno.Infra.Repositories
         public UserRepository(SaturnoDataContext context)
             : base(context) { }
 
-        public async Task<User> GetByEmail(string email)
+        public User GetByEmail(string email)
         {
-            return await DbSet.AsNoTracking().FirstOrDefaultAsync(c => c.Email == email);
+            return DbSet.AsNoTracking().FirstOrDefault(c => c.Email == email);
         }
 
-        public async Task<IReadOnlyCollection<User>> GetAll()
+        public IReadOnlyCollection<User> GetAll()
         {
-            return await DbSet.AsNoTracking()
-                .Select(c => new User(c.Id, c.Name, c.Email, c.Role)).ToListAsync();
+            return DbSet.AsNoTracking()
+                .Select(c => new User(c.Id, c.Name, c.Email, c.Role)).ToList();
         }
     }
 }

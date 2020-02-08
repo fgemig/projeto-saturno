@@ -1,7 +1,8 @@
 ﻿using Saturno.Domain.Commands;
-using Saturno.Domain.Commands.Contracts;
+using Saturno.Domain.Contracts;
 using Saturno.Domain.Entities;
 using Saturno.Domain.Enums;
+using Saturno.Domain.Events;
 using Saturno.Domain.Handlers.Contracts;
 using Saturno.Domain.Helpers;
 using Saturno.Domain.Repositories;
@@ -13,65 +14,78 @@ namespace Saturno.Domain.Handlers
     public class UserHandler : IHandler<RegisterUser>, IHandler<UpdateUser>, IHandler<LoginUser>
     {
         private readonly IUserRepository _userRepository;
-
-        public UserHandler(IUserRepository userRepository)
+        private readonly IEventBus _eventBus;
+        private readonly IUnitOfWork _unitOfWork;
+        public UserHandler(IUserRepository userRepository, IEventBus eventBus, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
+            _eventBus = eventBus;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<ICommandResult> Handle(RegisterUser command)
+        public Task<GenericCommandResult> Handle(RegisterUser command)
         {
             command.Validate();
 
             if (command.Invalid)
-                return new GenericCommandResult(false, "Verifique mensagens", command.ValidationResult);
+                return Task.FromResult(new GenericCommandResult(false, "Verifique mensagens", command.ValidationResult));
 
             var user = new User(Guid.NewGuid(), command.Name, command.Email, command.Password);
 
             user.SetUserRole(UserRole.User);
 
-            await _userRepository.Add(user);
+            _userRepository.Add(user);
 
-            return new GenericCommandResult(true, "Usuário salvo com sucesso!", user.Id);
+            if (_unitOfWork.Commit())
+            {
+                _eventBus.RaiseEvent(new UserRegisteredEvent(user.Id, user.Name, user.Email));
+            }            
+
+            return Task.FromResult(new GenericCommandResult(true, "Usuário salvo com sucesso!", user.Id));
         }
 
-        public async Task<ICommandResult> Handle(UpdateUser command)
+        public Task<GenericCommandResult> Handle(UpdateUser command)
         {
             command.Validate();
 
             if (command.Invalid)
-                return new GenericCommandResult(false, "Verifique mensagens", command.ValidationResult);
+                return Task.FromResult(new GenericCommandResult(false, "Verifique mensagens", command.ValidationResult));
 
-            var user = await _userRepository.GetById(command.Id);
+            var user = _userRepository.GetById(command.Id);
 
             if (user == null)
-                return new GenericCommandResult(false, "Usuário não encontrado");
+                return Task.FromResult(new GenericCommandResult(false, "Usuário não encontrado"));
 
             user.UpdateName(command.Name);
 
-            await _userRepository.Update(user);
+            _userRepository.Update(user);
 
-            return new GenericCommandResult(true, "Usuário atualizado com sucesso!", user);
+            if (_unitOfWork.Commit())
+            {
+                _eventBus.RaiseEvent(new UserUpdatedEvent(user.Id, user.Name, user.Email));
+            }
+
+            return Task.FromResult(new GenericCommandResult(true, "Usuário atualizado com sucesso!", user));
         }
 
-        public async Task<ICommandResult> Handle(LoginUser command)
+        public Task<GenericCommandResult> Handle(LoginUser command)
         {
             command.Validate();
 
             if (command.Invalid)
-                return new GenericCommandResult(false, "Verifique mensagens", command.ValidationResult);
+                return Task.FromResult(new GenericCommandResult(false, "Verifique mensagens", command.ValidationResult));
 
-            var user = await _userRepository.GetByEmail(command.Email);
+            var user = _userRepository.GetByEmail(command.Email);
 
             if (user != null)
             {
                 if (user.Email == command.Email && user.Password == EncryptionHelper.Encrypt(command.Password))
                 {
-                    return new GenericCommandResult(true, "Usuário autenticado", user);
+                    return Task.FromResult(new GenericCommandResult(true, "Usuário autenticado", user));
                 }
             }
 
-            return new GenericCommandResult(false, "Verifique credenciais de acesso");
+            return Task.FromResult(new GenericCommandResult(false, "Verifique credenciais de acesso"));
         }
     }
 }
