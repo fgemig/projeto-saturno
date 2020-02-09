@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Saturno.Domain.Commands;
+using Saturno.Domain.Commands.Handlers;
 using Saturno.Domain.Entities;
-using Saturno.Domain.Handlers;
 using Saturno.Domain.Repositories;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

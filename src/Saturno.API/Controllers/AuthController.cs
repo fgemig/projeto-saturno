@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Saturno.API.Services;
 using Saturno.Domain.Commands;
+using Saturno.Domain.Commands.Handlers;
 using Saturno.Domain.Entities;
-using Saturno.Domain.Handlers;
 using System.Threading.Tasks;
 
 namespace Saturno.API.Controllers

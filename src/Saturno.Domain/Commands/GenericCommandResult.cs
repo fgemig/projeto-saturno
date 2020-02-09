@@ -1,4 +1,4 @@
-﻿namespace Saturno.Domain.Models
+﻿namespace Saturno.Domain.Commands
 {
     public class GenericCommandResult
     {

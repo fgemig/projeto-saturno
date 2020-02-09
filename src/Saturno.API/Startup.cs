@@ -7,13 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Saturno.Domain.Bus;
+using Saturno.Domain.Commands.Handlers;
 using Saturno.Domain.Contracts;
-using Saturno.Domain.EventHandlers;
 using Saturno.Domain.Events;
-using Saturno.Domain.Handlers;
+using Saturno.Domain.Events.Handlers;
 using Saturno.Domain.Repositories;
 using Saturno.Infra;
-using Saturno.Infra.Bus;
 using Saturno.Infra.Repositories;
 using System.Text;
 

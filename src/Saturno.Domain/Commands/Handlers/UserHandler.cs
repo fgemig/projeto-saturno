@@ -1,15 +1,13 @@
-﻿using Saturno.Domain.Commands;
-using Saturno.Domain.Contracts;
+﻿using Saturno.Domain.Contracts;
 using Saturno.Domain.Entities;
 using Saturno.Domain.Enums;
 using Saturno.Domain.Events;
 using Saturno.Domain.Helpers;
-using Saturno.Domain.Models;
 using Saturno.Domain.Repositories;
 using System;
 using System.Threading.Tasks;
 
-namespace Saturno.Domain.Handlers
+namespace Saturno.Domain.Commands.Handlers
 {
     public class UserHandler : IHandler<RegisterUser>, IHandler<UpdateUser>, IHandler<LoginUser>
     {

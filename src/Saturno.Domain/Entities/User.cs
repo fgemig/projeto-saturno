@@ -1,6 +1,5 @@
 ﻿using Saturno.Domain.Enums;
 using Saturno.Domain.Helpers;
-using Saturno.Domain.Models;
 using System;
 
 namespace Saturno.Domain.Entities

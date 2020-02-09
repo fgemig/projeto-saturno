@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Saturno.Domain.Contracts;
-using Saturno.Domain.Models;
+using Saturno.Domain.Events;
 using System.Threading.Tasks;
 
-namespace Saturno.Infra.Bus
+namespace Saturno.Domain.Bus
 {
     public sealed class EventBus : IEventBus
     {

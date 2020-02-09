@@ -1,4 +1,4 @@
-﻿using Saturno.Domain.Models;
+﻿using Saturno.Domain.Commands;
 using System.Threading.Tasks;
 
 namespace Saturno.Domain.Contracts

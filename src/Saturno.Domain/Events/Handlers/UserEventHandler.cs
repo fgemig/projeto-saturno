@@ -3,7 +3,7 @@ using Saturno.Domain.Events;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Saturno.Domain.EventHandlers
+namespace Saturno.Domain.Events.Handlers
 {
     public class UserEventHandler : INotificationHandler<UserRegisteredEvent>, INotificationHandler<UserUpdatedEvent>
     {

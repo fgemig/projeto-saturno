@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Saturno.Domain.Models;
+using Saturno.Domain.Commands;
 
 namespace Saturno.API.Controllers
 {
