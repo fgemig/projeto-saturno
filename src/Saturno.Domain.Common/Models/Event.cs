@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System;
 
-namespace Saturno.Domain.Events
+namespace Saturno.Domain.Common.Models
 {
     public abstract class Event : IRequest, INotification
     {

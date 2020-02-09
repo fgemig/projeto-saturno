@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Saturno.Domain.Models;
+using System;
 
 namespace Saturno.Domain.Events
 {

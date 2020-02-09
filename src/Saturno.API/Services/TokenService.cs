@@ -4,8 +4,8 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Saturno.Domain.Extensions;
 using System.Collections.Generic;
+using Saturno.Domain.Extensions;
 
 namespace Saturno.API.Services
 {

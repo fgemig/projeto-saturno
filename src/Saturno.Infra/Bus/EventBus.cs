@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Saturno.Domain.Contracts;
-using Saturno.Domain.Events;
+using Saturno.Domain.Models;
 using System.Threading.Tasks;
 
 namespace Saturno.Infra.Bus

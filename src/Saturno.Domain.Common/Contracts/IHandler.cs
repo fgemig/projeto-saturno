@@ -1,8 +1,7 @@
-﻿using Saturno.Domain.Commands;
-using Saturno.Domain.Commands.Contracts;
+﻿using Saturno.Domain.Common.Models;
 using System.Threading.Tasks;
 
-namespace Saturno.Domain.Handlers.Contracts
+namespace Saturno.Domain.Common.Contracts
 {
     public interface IHandler<T> where T : ICommand
     {

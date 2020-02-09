@@ -19,7 +19,7 @@ namespace Saturno.API.Controllers
             if (command == null)
                 return BadRequest("Usuário não informado");
 
-            var result = (GenericCommandResult)await handler.Handle(command);
+            var result = await handler.Handle(command);
 
             if (result.Success)
             {

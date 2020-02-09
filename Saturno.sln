@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saturno.Infra", "src\Saturn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saturno.Domain.Tests", "src\Saturno.Domain.Tests\Saturno.Domain.Tests.csproj", "{D0B8E782-5F6C-465D-AE7F-820436DFD21C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Saturno.API", "src\Saturno.API\Saturno.API.csproj", "{A2CE95BC-156D-4C55-8F02-A085BDB7A1F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Saturno.API", "src\Saturno.API\Saturno.API.csproj", "{A2CE95BC-156D-4C55-8F02-A085BDB7A1F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

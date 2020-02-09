@@ -1,7 +1,7 @@
 ﻿using Saturno.Domain.Enums;
 using Saturno.Domain.Helpers;
+using Saturno.Domain.Models;
 using System;
-using System.Collections.Generic;
 
 namespace Saturno.Domain.Entities
 {

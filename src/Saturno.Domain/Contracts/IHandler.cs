@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace Saturno.Domain.Contracts
 {
-    public interface IEventBus
+    public interface IHandler<T> where T : ICommand
     {
-        Task RaiseEvent<T>(T @event) where T : Event;
+        Task<GenericCommandResult> Handle(T command);
     }
 }

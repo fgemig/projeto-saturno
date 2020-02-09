@@ -1,7 +1,7 @@
-﻿using Saturno.Domain.Models;
+﻿using Saturno.Domain.Common.Models;
 using System.Threading.Tasks;
 
-namespace Saturno.Domain.Contracts
+namespace Saturno.Domain.Common.Bus
 {
     public interface IEventBus
     {

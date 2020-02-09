@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Saturno.Domain.Validation
+namespace Saturno.Domain.Common.Validation
 {
     public class AbstractValidator
     {

@@ -1,4 +1,4 @@
-﻿namespace Saturno.Domain.Commands.Contracts
+﻿namespace Saturno.Domain.Contracts
 {
     public interface ICommand : IValidator { }
 }

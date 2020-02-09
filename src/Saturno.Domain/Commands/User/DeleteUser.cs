@@ -1,4 +1,4 @@
-﻿using Saturno.Domain.Commands.Contracts;
+﻿using Saturno.Domain.Contracts;
 using Saturno.Domain.Validation;
 using System;
 

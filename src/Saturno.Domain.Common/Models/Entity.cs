@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Saturno.Domain.Entities
+namespace Saturno.Domain.Common.Models
 {
     public abstract class Entity<T> where T : class
     {

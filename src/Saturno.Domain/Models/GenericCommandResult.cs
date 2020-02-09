@@ -1,6 +1,4 @@
-﻿using Saturno.Domain.Commands.Contracts;
-
-namespace Saturno.Domain.Commands
+﻿namespace Saturno.Domain.Models
 {
     public class GenericCommandResult
     {

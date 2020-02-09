@@ -1,5 +1,5 @@
 ﻿using Saturno.Domain.Contracts;
-using Saturno.Domain.Events;
+using Saturno.Domain.Models;
 using System;
 using System.Threading.Tasks;
 

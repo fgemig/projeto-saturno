@@ -54,7 +54,7 @@ namespace Saturno.Domain.Tests
         {
             RegisterUser command = NewValidUser();
 
-            var result = (GenericCommandResult)await _handler.Handle(command);
+            var result = await _handler.Handle(command);
 
             var userGuid = (Guid)result.Data;
 
@@ -70,7 +70,7 @@ namespace Saturno.Domain.Tests
         {
             RegisterUser command = NewInvalidUser();
 
-            var result = (GenericCommandResult)await _handler.Handle(command);
+            var result = await _handler.Handle(command);
 
             Assert.AreEqual(2, command.ValidationResult.Count);
             Assert.IsFalse(result.Success);
@@ -86,7 +86,7 @@ namespace Saturno.Domain.Tests
                 Email = "fabio@domain.com"
             };
 
-            var result = (GenericCommandResult)await _handler.Handle(command);
+            var result = await _handler.Handle(command);
 
             Assert.IsFalse(result.Success);
             Assert.AreEqual("Usuário não encontrado", result.Message);
@@ -101,7 +101,7 @@ namespace Saturno.Domain.Tests
                 Email = "fabio@domain.com"
             };
 
-            var result = (GenericCommandResult)await _handler.Handle(command);
+            var result = await _handler.Handle(command);
 
             Assert.AreEqual(1, command.ValidationResult.Count);
             Assert.IsFalse(result.Success);
@@ -112,7 +112,7 @@ namespace Saturno.Domain.Tests
         {
             RegisterUser registerUserCommand = NewValidUser();
 
-            var registerUserCommandResult = (GenericCommandResult)await _handler.Handle(registerUserCommand);
+            var registerUserCommandResult = await _handler.Handle(registerUserCommand);
 
             var userResultGuid = (Guid)registerUserCommandResult.Data;
 
@@ -129,7 +129,7 @@ namespace Saturno.Domain.Tests
                 Email = userDb.Email
             };
 
-            var updateUserCommandResult = (GenericCommandResult)await _handler.Handle(updateUserCommand);
+            var updateUserCommandResult = await _handler.Handle(updateUserCommand);
 
             userDb = _fakeUserRepository.GetById(userResultGuid);
 
